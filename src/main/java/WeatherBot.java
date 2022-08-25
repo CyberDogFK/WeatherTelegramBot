@@ -103,7 +103,7 @@ public class WeatherBot extends TelegramLongPollingBot {
     private SendAnimation animationById(WeatherCall weatherCall) {
 
         SendAnimation send_animation = new SendAnimation();
-        send_animation.setAnimation(takeFileById(weatherCall.sendAnimationById()));
+        send_animation.setAnimation(takeFileById(weatherCall.setAnimationById()));
         return send_animation;
     }
 
@@ -142,7 +142,6 @@ public class WeatherBot extends TelegramLongPollingBot {
 
     private String createWeatherString(WeatherCall weather) {
         if (weather.getMessage() != null) {
-            System.out.println("message not null");
             return weather.getMessage();
         }
         return "Weather in " + weather.getLocation() + ":\n\n" +

@@ -20,7 +20,7 @@ public class WeatherCall {
     private String description;
     private String wind;
 
-    public String sendAnimationById() {
+    public String setAnimationById() {
         ArrayList<String> suitableAnimations = new ArrayList<>();
         Random random = new Random();
 
