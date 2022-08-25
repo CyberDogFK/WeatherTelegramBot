@@ -100,7 +100,6 @@ public class WeatherBot extends TelegramLongPollingBot {
 
         SendAnimation send_animation = new SendAnimation();
         send_animation.setAnimation(takeFileById(weather.sendAnimationById()));
-        System.out.println(weather.getMain());
         return send_animation;
     }
 
@@ -147,8 +146,7 @@ public class WeatherBot extends TelegramLongPollingBot {
                 "Temp filling: " + weather.getTempFilling() + "\n" +
                 "Clouds: " + weather.getDescription() + "\n" +
                 "Wind speed: " + weather.getWind() + "\n" +
-                "Air pressure: " + weather.getAirPressure() + "\n" +
-                "Main: " + weather.getMain();
+                "Air pressure: " + weather.getAirPressure();
     }
 
     private void log(String first_name, String user_username, String chat_id) {

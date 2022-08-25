@@ -25,57 +25,63 @@ public class WeatherCall {
         Random random = new Random();
 
         String[] hotWeather = {
-                "CgACAgIAAxkBAAIERGMFMgHDY07wnEbQSRPAAbHMSnunAALvGwACZXMxSPd4mScuWSrOKQQ",
-                "CgACAgIAAxkBAAIESGMFMkWu4MNCmQ1Z2YLYKpx2yGdrAALxGwACZXMxSEpyHNZaYxrOKQQ",
-                "CgACAgIAAxkBAAIETGMFMtLqxYRfgp5mBm5RL-nYKZ8jAAL0GwACZXMxSHzXjtyDyehRKQQ",
-                "CgACAgIAAxkBAAIEVGMFNFL68vlcFV8Gt0Bt_flR28pAAAL5GwACZXMxSAEVrUoB833zKQQ",
-                "CgACAgIAAxkBAAIEXmMFNKOk78nUKK4lPzDKOrKP9jEzAAL7GwACZXMxSGAO-Br8pz0qKQQ",
-                "CgACAgIAAxkBAAIEZGMFNMFa0jCL1_IUQpZH0HwTuzVvAAL8GwACZXMxSGbaLnXdKJxoKQQ"
+                "CgACAgIAAxkBAAMKYwesB3C2PrPzhlmLnm1-te0Knz8AAl8dAAIQVkFIYX_y8w1DYo8pBA",
+                "CgACAgIAAxkBAAMQYwesEnBLmWL8rwrQkM8diNfR2AQAAmIdAAIQVkFIDL6jarI-ERYpBA",
+                "CgACAgIAAxkBAAMSYwesFrNBEEkBnaMGVJi8IpzDJ3oAAmMdAAIQVkFIusIAAabo3YLkKQQ",
+                "CgACAgIAAxkBAAMYYwesH9D-jgQkXDkfdkHXE-de8GEAAmYdAAIQVkFITsDGrWwOXqIpBA",
+                "CgACAgIAAxkBAAMaYwesJgfFUqaM7Wvz0XJFstltc14AAmcdAAIQVkFIhOaXLcKNamUpBA",
+                "CgACAgIAAxkBAAMkYwesN4wfiqh0LJytWVnr36yoBb8AAmwdAAIQVkFILsLozcJC7mwpBA",
+                "CgACAgIAAxkBAAM3YweusY33YlrfwE04GYtRnBfh0wkAAnUdAAIQVkFIrMTTRilsFBMpBA"
         };
         if (Double.parseDouble(temp_info) > 30) {
             suitableAnimations.add(hotWeather[random.nextInt(hotWeather.length)]);
         }
 
         String[] rainy = {
-                "CgACAgQAAxkBAAIEOmMFMGVlOmHGF4AFeNUW4Q2UyaMYAAJlAwACuIEEU7U6KSbUeMzdKQQ",
-                "CgACAgIAAxkBAAIEPGMFMNteLQltCE-spGEqRDg5Yba3AAI_AwAC779BSfrIFjUvo7nSKQQ",
-                "CgACAgQAAxkBAAIETmMFNCdlgImuBvRR0ObXiBGLzNNTAAIPAwACH5odU6Y5VH7x6g3QKQQ",
-                "CgACAgQAAxkBAAIEUGMFNC9PCp13m3Q5sN72Y44CCgtSAALGAgACTq0NUw6tiXTS9ExRKQQ",
-                "CgACAgIAAxkBAAIEaGMFNNR5Y8lWOXqfZoJGup-XpneVAAL-GwACZXMxSCHEYjLOp-XyKQQ"
+                "CgACAgIAAxkBAAMIYwesAjsNTsIMhthGr-Ez6uylViYAAl0dAAIQVkFIJ5LUEObIIygpBA",
+                "CgACAgQAAxkBAAMmYwetO4edrhOMS62fM3pRRkYBwF0AAmUDAAK4gQRTH2KvnXnTq7spBA",
+                "CgACAgIAAxkBAAMoYwetTRTD3TRCd-u2vLpcFBpA2tMAAj8DAALvv0FJOb01dKMEchUpBA",
+                "CgACAgQAAxkBAAMqYwetazZI36njGGzzL8M3eEvsmXwAAsYCAAJOrQ1TyGJU0AdT9-YpBA"
         };
         if (main.equals("Rain")) {
             suitableAnimations.add(rainy[random.nextInt(rainy.length)]);
         }
 
         String[] clearSkyGoodWeather = {
-                "CgACAgIAAxkBAAIEbGMFNOqTDzNjvYmXKIVGEql6wKWyAAMcAAJlczFIpYg4yqwYfgABKQQ",
-                "CgACAgIAAxkBAAIEcGMFNPn1kisfZXEgjNo4iSVrxd07AAIBHAACZXMxSBsoPHU1qzdNKQQ"
+                "CgACAgIAAxkBAAMcYwesKfXvatUlF9jnsVcsCrXi-lQAAmgdAAIQVkFI437pZtZkV-opBA",
+                "CgACAgIAAxkBAAMiYwesNfZt62BTaLzBSPgT1EJlwVgAAmsdAAIQVkFIB-MmJaUF9N0pBA",
+                "CgACAgIAAxkBAAMzYweucI3nN1_KoHTD4v0Hf0uss2oAAnQdAAIQVkFI1n8EMK-fA3UpBA",
+                "CgACAgIAAxkBAANAYwevlep6ENYdGjIFdP2-ZfDW_gUAAngdAAIQVkFIWZvJT8adbvIpBA",
+                "CgACAgIAAxkBAANDYwewFkFsweQXqrliRqB8gQYcu80AAn0dAAIQVkFItx-mOHhInxMpBA",
+                "CgACAgIAAxkBAANFYwewWAABEM0YIab8WDbIJ8V_FoXRAAJ-HQACEFZBSLwjTd0zxA4mKQQ",
+                "CgACAgIAAxkBAANHYwewmfE6KNOqf-11Egm2wcoyZUsAAn8dAAIQVkFI7xqR2qAsth0pBA",
+                "CgACAgIAAxkBAANJYwexM_FT5olBGYZVIK_j-InsUYcAAoMdAAIQVkFIf02Muflgui8pBA",
+                "CgACAgIAAxkBAANLYwex31PwQhdr1PXhbPuINtjCMyAAAogdAAIQVkFIAo4oPA3lOB0pBA"
         };
         if (!main.equals("Rain") && Double.parseDouble(temp_info) < 30 && Double.parseDouble(temp_info) > 15) {
             suitableAnimations.add(clearSkyGoodWeather[random.nextInt(clearSkyGoodWeather.length)]);
         }
 
         String[] snow = {
-                "CgACAgIAAxkBAAIEdGMFNQ3uRzpvg21rD2Kf8alhUQqRAAICHAACZXMxSLrAoTg8E4H5KQQ",
-                "CgACAgIAAxkBAAIEhGMFNwaQJTo2ZoveYMLz_ktYcj91AAIMHAACZXMxSLXNoSy75yqsKQQ",
-                "CgACAgIAAxkBAAIEiGMFOo6HjHjKxjgToDlErM9IqIIFAAIdHAACZXMxSESZ2ZG2CJDnKQQ",
-                "CgACAgIAAxkBAAIEkGMFO44nK4lHFeRvNyQhZFDXjFLbAAIhHAACZXMxSFHf0BpQuCoyKQQ",
-                "CgACAgIAAxkBAAIEkmMFO5FPCOVY5A0L3FHNri1xzow_AAIjHAACZXMxSHOJlJ5oxSNIKQQ"
+                "CgACAgIAAxkBAAMGYwer_gx48ZO_Ynua48E4mcwcWH4AAlwdAAIQVkFIFpXP6SvwzYcpBA",
+                "CgACAgIAAxkBAAMMYwesCmsehw4JwuBTdAHMTYV2EcMAAmAdAAIQVkFInFroLjDWhagpBA",
+                "CgACAgIAAxkBAAMWYwesHC8NjDbwxLzOa7cGL0gsW1YAAmUdAAIQVkFI9tfBHL7P9j8pBA",
+                "CgACAgIAAxkBAAMeYwesL6uFb63fKuci-bnACCzAYbkAAmkdAAIQVkFIAYA_ytbEahopBA",
+                "CgACAgIAAxkBAAMgYwesM87_yftF-YTonJWw-JuEAAGCAAJqHQACEFZBSJOnSLLGcN82KQQ"
         };
         if(main.equals("Snow")) {
             suitableAnimations.add(snow[random.nextInt(snow.length)]);
         }
 
         String[] mist = {
-                "CgACAgQAAxkBAAIEdmMFNZknDb9JNTEQGBR5KmlU77xUAAL_AgACjgcMU66qzMbhlQxWKQQ",
-                "CgACAgIAAxkBAAIEfmMFNj99auRONwpekjduFuDCuQRDAAILHAACZXMxSDaUhrUQ-eLTKQQ"
+                "CgACAgIAAxkBAAMOYwesDz4kjSz_TpmdkTBlHcWraH4AAmEdAAIQVkFIjm-1BVtnc5wpBA",
+                "CgACAgIAAxkBAAMUYwesGdMtthlzBIufuPLjuUd86xAAAmQdAAIQVkFIGTrvuy-jPrIpBA"
         };
         if(main.equals("Mist")) {
             suitableAnimations.add(mist[random.nextInt(mist.length)]);
         }
 
         if (suitableAnimations.isEmpty()) {
-            System.out.println("Try to return empty");
             return "CgACAgQAAxkBAAIEOmMFMGVlOmHGF4AFeNUW4Q2UyaMYAAJlAwACuIEEU7U6KSbUeMzdKQQ";
         }
         return suitableAnimations.get(random.nextInt(suitableAnimations.size()));
