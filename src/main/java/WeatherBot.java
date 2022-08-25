@@ -1,7 +1,10 @@
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendAnimation;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.games.Animation;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -37,7 +40,7 @@ public class WeatherBot extends TelegramLongPollingBot {
                     message.setChatId(chat_id);
                     message.setText("Choose the country");
 
-                    InlineKeyboardMarkup markup = new CountryInlineMarkup().getCountryInlineMarkup();
+                    InlineKeyboardMarkup markup = new StartInlineMarkup().getCountryInlineMarkup();
                     message.setReplyMarkup(markup);
 
                     try {
@@ -50,40 +53,41 @@ public class WeatherBot extends TelegramLongPollingBot {
                     message.setChatId(chat_id);
                     message.setText(createWeatherString(message_text));
 
+                    SendAnimation sendAnimation = animationById(message_text);
+                    sendAnimation.setChatId(chat_id);
+
                     try {
                         execute(message);
+                        execute(sendAnimation);
                     } catch (TelegramApiException e) {
                         e.printStackTrace();
                     }
                 }
+            } else if (update.getMessage().hasAnimation()) {
+                takeAnimationId(update);
             }
         } else if (update.hasCallbackQuery()) {
             String call_data = update.getCallbackQuery().getData();
             long chat_id = update.getCallbackQuery().getMessage().getChatId();
             long message_id = update.getCallbackQuery().getMessage().getMessageId();
+            SendAnimation animation = null;
+
 
             EditMessageText message;
             switch (call_data) {
-                case "Ukraine" ->
-                    message = chooseAfterCountry(message_id, chat_id, call_data);
-                case "Poland" ->
-                    message = chooseAfterCountry(message_id, chat_id, call_data);
-                case "France" ->
-                    message = chooseAfterCountry(message_id, chat_id, call_data);
-                case "Great Britain" ->
-                    message = chooseAfterCountry(message_id, chat_id, call_data);
-                case "USA" ->
-                    message = chooseAfterCountry(message_id, chat_id, call_data);
-                case "Germany" ->
+                case "Ukraine", "Poland", "France", "Great Britain", "USA", "Germany" ->
                     message = chooseAfterCountry(message_id, chat_id, call_data);
                 default -> {
                     message = new EditMessageText();
                     message.setText(createWeatherString(call_data));
                     message.setMessageId(Math.toIntExact(message_id));
                     message.setChatId(chat_id);
+                    animation = animationById(call_data);
+                    animation.setChatId(chat_id);
                 }
             }
             try {
+                if (animation != null) execute(animation);
                 execute(message);
             } catch (TelegramApiException e) {
                 e.printStackTrace();
@@ -91,12 +95,45 @@ public class WeatherBot extends TelegramLongPollingBot {
         }
     }
 
+    private SendAnimation animationById(String location) {
+        WeatherCall weather = new WeatherCall(location);
+
+        SendAnimation send_animation = new SendAnimation();
+        send_animation.setAnimation(takeFileById(weather.sendAnimationById()));
+        System.out.println(weather.getMain());
+        return send_animation;
+    }
+
+    private void takeAnimationId(Update update) {
+        long chat_id = update.getMessage().getChatId();
+
+        Animation anim = update.getMessage().getAnimation();
+        String anim_id = anim.getFileId();
+
+        SendAnimation msg = new SendAnimation();
+        msg.setChatId(chat_id);
+        msg.setAnimation(takeFileById(anim_id));
+        msg.setCaption(anim_id);
+
+        try {
+            execute(msg);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private InputFile takeFileById(String id) {
+        InputFile file = new InputFile();
+        file.setMedia(id);
+        return file;
+    }
+
     private EditMessageText chooseAfterCountry(long message_id, long chat_id, String country) {
         EditMessageText message = new EditMessageText();
         message.setText("Choose the city: ");
         message.setMessageId(Math.toIntExact(message_id));
         message.setChatId(chat_id);
-        message.setReplyMarkup(new CityInlineMarkup().getCityInlineMarkup(country));
+        message.setReplyMarkup(new StartInlineMarkup().getCityInlineMarkup(country));
         return message;
     }
 
@@ -108,12 +145,11 @@ public class WeatherBot extends TelegramLongPollingBot {
         return "Weather in " + location + ":\n\n" +
                 "Temp: " + weather.getTemp() + "\n" +
                 "Temp filling: " + weather.getTempFilling() + "\n" +
-                "Clouds: " + weather.getClouds() + "\n" +
+                "Clouds: " + weather.getDescription() + "\n" +
                 "Wind speed: " + weather.getWind() + "\n" +
-                "Air pressure: " + weather.getAirPressure();
+                "Air pressure: " + weather.getAirPressure() + "\n" +
+                "Main: " + weather.getMain();
     }
-
-
 
     private void log(String first_name, String user_username, String chat_id) {
         System.out.println("\b------------------------------------------------------------");
