@@ -49,16 +49,20 @@ public class WeatherBot extends TelegramLongPollingBot {
                         e.printStackTrace();
                     }
                 } else {
+                    WeatherCall weather = new WeatherCall(message_text);
                     SendMessage message = new SendMessage();
                     message.setChatId(chat_id);
-                    message.setText(createWeatherString(message_text));
+                    message.setText(createWeatherString(weather));
 
-                    SendAnimation sendAnimation = animationById(message_text);
-                    sendAnimation.setChatId(chat_id);
+                    SendAnimation sendAnimation = null;
+                    if (weather.getMessage() == null) {
+                        sendAnimation = animationById(weather);
+                        sendAnimation.setChatId(chat_id);
+                    }
 
                     try {
                         execute(message);
-                        execute(sendAnimation);
+                        if (sendAnimation != null) execute(sendAnimation);
                     } catch (TelegramApiException e) {
                         e.printStackTrace();
                     }
@@ -76,13 +80,14 @@ public class WeatherBot extends TelegramLongPollingBot {
             EditMessageText message;
             switch (call_data) {
                 case "Ukraine", "Poland", "France", "Great Britain", "USA", "Germany" ->
-                    message = chooseAfterCountry(message_id, chat_id, call_data);
+                    message = chooseOfTheCity(message_id, chat_id, call_data);
                 default -> {
+                    WeatherCall weather = new WeatherCall(call_data);
                     message = new EditMessageText();
-                    message.setText(createWeatherString(call_data));
+                    message.setText(createWeatherString(weather));
                     message.setMessageId(Math.toIntExact(message_id));
                     message.setChatId(chat_id);
-                    animation = animationById(call_data);
+                    animation = animationById(weather);
                     animation.setChatId(chat_id);
                 }
             }
@@ -95,11 +100,10 @@ public class WeatherBot extends TelegramLongPollingBot {
         }
     }
 
-    private SendAnimation animationById(String location) {
-        WeatherCall weather = new WeatherCall(location);
+    private SendAnimation animationById(WeatherCall weatherCall) {
 
         SendAnimation send_animation = new SendAnimation();
-        send_animation.setAnimation(takeFileById(weather.sendAnimationById()));
+        send_animation.setAnimation(takeFileById(weatherCall.sendAnimationById()));
         return send_animation;
     }
 
@@ -127,7 +131,7 @@ public class WeatherBot extends TelegramLongPollingBot {
         return file;
     }
 
-    private EditMessageText chooseAfterCountry(long message_id, long chat_id, String country) {
+    private EditMessageText chooseOfTheCity(long message_id, long chat_id, String country) {
         EditMessageText message = new EditMessageText();
         message.setText("Choose the city: ");
         message.setMessageId(Math.toIntExact(message_id));
@@ -136,14 +140,16 @@ public class WeatherBot extends TelegramLongPollingBot {
         return message;
     }
 
-    private String createWeatherString(String location) {
-        WeatherCall weather = new WeatherCall(location);
+    private String createWeatherString(WeatherCall weather) {
         if (weather.getMessage() != null) {
+            System.out.println("message not null");
             return weather.getMessage();
         }
-        return "Weather in " + location + ":\n\n" +
+        return "Weather in " + weather.getLocation() + ":\n\n" +
                 "Temp: " + weather.getTemp() + "\n" +
                 "Temp filling: " + weather.getTempFilling() + "\n" +
+                "Today max temp: " + weather.getTempMax() + "\n" +
+                "Today min temp: " + weather.getTempMin() + "\n" +
                 "Clouds: " + weather.getDescription() + "\n" +
                 "Wind speed: " + weather.getWind() + "\n" +
                 "Air pressure: " + weather.getAirPressure();

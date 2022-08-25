@@ -111,6 +111,10 @@ public class WeatherCall {
         }
     }
 
+    public String getLocation() {
+        return location;
+    }
+
     public String getMain() {
         return main;
     }
@@ -124,6 +128,9 @@ public class WeatherCall {
     }
 
     public String getMessage() {
+        if (message == null) {
+            return null;
+        }
         return message;
     }
 
