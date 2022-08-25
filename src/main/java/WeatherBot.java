@@ -13,8 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class WeatherBot extends TelegramLongPollingBot {
-    private final static String BOT_NAME = "my_test_apavliuk_bot";
-    private final static String BOT_TOKEN = "5516603177:AAGNklCwMcYf9-e4TtTvtTnaWxPFeLKI1mI";
+    private final static String BOT_NAME = "weather_telegram_antp_bot";
+    private final static String BOT_TOKEN = "5749054194:AAE3Dzid--FHkwvW8GV6fcTxLbQINq-8hK8";
     @Override
     public String getBotUsername() {
         return BOT_NAME;
